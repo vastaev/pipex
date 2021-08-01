@@ -12,7 +12,8 @@
 
 NAME = pipex
 
-SRCS_LIST	=	pipex.c
+SRCS_LIST	=	pipex.c\
+				errors.c
 SRCS_DIR	=	src/
 SRCS		=	$(addprefix $(SRCS_DIR), $(SRCS_LIST))
 
@@ -53,14 +54,14 @@ $(NAME) : $(LIBFT) $(OBJS_DIR) $(OBJS)
 	@echo "$(NAME): $(GREEN)$(NAME) was created$(RESET)"
 
 $(OBJS_DIR)%.o : $(SRCS_DIR)%.c
-	@$(CC) -g $(СFLAGS) $(INCLUDES) -c $< -o $@
+	@$(CC) $(СFLAGS) $(INCLUDES) -c $< -o $@
 	@echo "$(BLUE)`ruby -e "puts (0..1).to_a.shuffle.join('')"`$(RESET)\c"
 
 $(OBJS_DIR) :
 	@mkdir -p $(OBJS_DIR)
 	@echo "$(NAME): $(BLUE)creating $(NAME)$(RESET)"
 
-$(LIBFT):
+$(LIBFT) :
 	@echo "$(NAME): $(BLUE)creating $(LIBA)$(RESET)"
 	@$(MAKE) -C $(LIBFT_DIR)
 

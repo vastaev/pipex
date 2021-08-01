@@ -6,6 +6,7 @@
 # include <stdlib.h>
 # include <stdbool.h>
 # include <stdio.h>
+# include <string.h>
 # include <fcntl.h>
 # include "libft.h"
 # include <sys/errno.h>
@@ -14,6 +15,7 @@ typedef struct s_data
 {
 	char	**argv;
 	int		cntCmnds;
+	int		ind;
 	char	**envp;
 	char	*infile;
 	char	*outfile;
@@ -22,6 +24,6 @@ typedef struct s_data
 } t_data;
 
 void	error_exit(char *str, int exitCode);
-
+void	errno_exit(char *name);
 
 #endif
