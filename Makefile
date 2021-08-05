@@ -13,7 +13,9 @@
 NAME = pipex
 
 SRCS_LIST	=	pipex.c\
-				errors.c
+				errors.c\
+				parsing.c\
+				piping.c
 SRCS_DIR	=	src/
 SRCS		=	$(addprefix $(SRCS_DIR), $(SRCS_LIST))
 

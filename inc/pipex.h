@@ -21,9 +21,14 @@ typedef struct s_data
 	char	*outfile;
 	char	***cmnds;
 	char	**paths;
+	int		pathsLen;
 } t_data;
 
 void	error_exit(char *str, int exitCode);
 void	errno_exit(char *name);
+void	parse_paths(t_data *data);
+void	parse_commands(t_data *data);
+void	pipex(t_data data);
+
 
 #endif
