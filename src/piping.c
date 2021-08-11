@@ -32,12 +32,38 @@ void	run_command(t_data *data, int i)
 	}
 }
 
+void	pipe_in(t_data data, int *fd, int in)
+{
+	close(fd[0]);
+	if (dup2(fd[1], STDOUT_FILENO) == -1)
+		errno_exit(NULL);
+	if (dup2(in, STDIN_FILENO))
+		errno_exit(NULL);
+	close(fd[1]);
+	close(in);
+	run_command(&data, 0);
+}
+
+void	pipe_out(t_data data, int *fd, int out)
+{
+	close(fd[1]);
+	if (dup2(fd[0], STDIN_FILENO) == -1)
+		errno_exit(NULL);
+	if (dup2(out, STDOUT_FILENO))
+		errno_exit(NULL);
+	close(fd[0]);
+	close(out);
+	run_command(&data, 1);
+}
+
 void	pipex(t_data data)
 {
 //	int	pids[data.cntCmnds];
 //	int	pipes[data.cntCmnds + 1][2];
 //	int	i;
 //	int	j;
+//	int in;
+//	int out;
 //
 //	i = 0;
 //	while (i < data.cntCmnds + 1)
@@ -61,24 +87,54 @@ void	pipex(t_data data)
 //					close(pipes[j][0]);
 //				if (i + 1 != j)
 //					close(pipes[j][1]);
-//				run_command(&data, 0);
-//				return;
+//				j++;
 //			}
+//			dup2(pipes[i][0], STDIN_FILENO);
+//			dup2(pipes[i + 1][1], STDOUT_FILENO);
+//			run_command(&data, i);
+//			close(pipes[i][0]);
+//			close(pipes[i + 1][1]);
+//			return;
 //		}
+//		i++;
 //	}
+//	j = 0;
+//	while (j < data.cntCmnds + 1)
+//	{
+//		if (j != data.cntCmnds)
+//			close(pipes[j][0]);
+//		if (j != 0)
+//			close(pipes[j][1]);
+//		j++;
+//	}
+//	in = open(data.argv[1], O_RDONLY, 0644);
+//	dup2(in, STDIN_FILENO);
+////	dup2(pipes[0][1], STDOUT_FILENO);
+//	dup2(pipes[data.cntCmnds - 1][1], STDIN_FILENO);
+//	out = open(data.argv[data.ind], O_WRONLY | O_CREAT | O_TRUNC, 0774);
+//	dup2(out, STDOUT_FILENO);
+//	i = 0;
+//	while (i++ < data.cntCmnds)
+//		waitpid(pids[i], NULL, 0);
 	int pid;
+	int fd[2];
+	int	in;
+	int	out;
 
+	in = open(data.argv[1], O_RDONLY);
+	if (in == -1)
+		errno_exit(NULL);
+	out = open(data.argv[data.ind], O_WRONLY | O_CREAT | O_TRUNC);
+	if (out == -1)
+		errno_exit(NULL);
+	if (pipe(fd) == -1)
+		errno_exit(NULL);
 	pid = fork();
+	if (pid == -1)
+		errno_exit(NULL);
 	if (pid == 0)
-	{
-
-		run_command(&data, 0);
-		return;
-	}
+		pipe_out(data, fd, out);
+	else
+		pipe_in(data, fd, in);
 	wait(0);
 }
-
-//void pohut(t_data data)
-//{
-//
-//}
