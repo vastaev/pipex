@@ -37,7 +37,7 @@ void	pipe_in(t_data data, int *fd, int in)
 	close(fd[0]);
 	if (dup2(fd[1], STDOUT_FILENO) == -1)
 		errno_exit(NULL);
-	if (dup2(in, STDIN_FILENO))
+	if (dup2(in, STDIN_FILENO) == -1)
 		errno_exit(NULL);
 	close(fd[1]);
 	close(in);
