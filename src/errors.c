@@ -19,5 +19,6 @@ void	errno_exit(char *name)
 void	error_exit(char *str, int exitCode)
 {
 	ft_putstr_fd(str, 2);
+	write(2, "\n", 1);
 	exit(exitCode);
 }

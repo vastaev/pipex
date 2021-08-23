@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: cjoanne <cjoanne@student.42.fr>            +#+  +:+       +#+         #
+#    By: nephilister <nephilister@student.42.fr>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/04/21 12:30:03 by cjoanne           #+#    #+#              #
-#    Updated: 2021/05/28 03:56:01 by cjoanne          ###   ########.fr        #
+#    Updated: 2021/08/23 16:19:42 by nephilister      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -52,12 +52,11 @@ all : $(NAME)
 
 $(NAME) : $(LIBFT) $(OBJS_DIR) $(OBJS)
 	@$(CC) $(LIBFT) $(LIBRARIES) $(INCLUDES) $(OBJS) -o $(NAME)
-	@echo "\n$(NAME): $(BLUE)$(NAME) object files were created$(RESET)"
+	@echo "$(NAME): $(BLUE)$(NAME) object files were created$(RESET)"
 	@echo "$(NAME): $(GREEN)$(NAME) was created$(RESET)"
 
 $(OBJS_DIR)%.o : $(SRCS_DIR)%.c
 	@$(CC) $(СFLAGS) $(INCLUDES) -c $< -o $@
-	@echo "$(BLUE)`ruby -e "puts (0..1).to_a.shuffle.join('')"`$(RESET)\c"
 
 $(OBJS_DIR) :
 	@mkdir -p $(OBJS_DIR)

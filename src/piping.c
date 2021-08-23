@@ -49,7 +49,7 @@ void	pipe_out(t_data data, int *fd, int out)
 	close(fd[1]);
 	if (dup2(fd[0], STDIN_FILENO) == -1)
 		errno_exit(NULL);
-	if (dup2(out, STDOUT_FILENO))
+	if (dup2(out, STDOUT_FILENO) == -1)
 		errno_exit(NULL);
 	close(fd[0]);
 	close(out);
