@@ -19,8 +19,8 @@ void	initialize_data(int argc, char *argv[], char *envp[], t_data *data)
 
 void	validation_of_args(int argc, char *argv[])
 {
-	if (argc != 7)
-		error_exit("Wrong usage, non-expected args number", 1);
+	if (argc < 7)
+		error_exit("Wrong usage, not enough args", 1);
 	if (access(argv[1], F_OK) == -1 || access(argv[1], R_OK) == -1)
 		errno_exit(argv[1]);
 }

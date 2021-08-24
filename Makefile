@@ -6,7 +6,7 @@
 #    By: nephilister <nephilister@student.42.fr>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/04/21 12:30:03 by cjoanne           #+#    #+#              #
-#    Updated: 2021/08/23 16:19:42 by nephilister      ###   ########.fr        #
+#    Updated: 2021/08/24 08:12:21 by nephilister      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,9 +20,18 @@ SRCS_DIR	=	src/
 SRCS		=	$(addprefix $(SRCS_DIR), $(SRCS_LIST))
 
 OBJS_LIST	=	$(patsubst %.c, %.o, $(SRCS_LIST))
-
 OBJS_DIR	=	objects/
 OBJS		=	$(addprefix $(OBJS_DIR), $(OBJS_LIST))
+
+
+BONUS_LIST	=	errors.c\
+				parsing.c\
+				pipex_bonus.c\
+				piping_bonus.c
+BONUS_SRC	=	$(addprefix $(SRCS_DIR), $(BONUS_LIST))
+
+BONUS_OBJ_LIST	= $(patsubst %.c, %.o, $(BONUS_LIST))
+BONUS_OBJ		= $(addprefix $(OBJS_DIR), $(BONUS_OBJ_LIST))
 
 CC 			=	gcc
 CFLAGS		=	-Wall -Wextra -Werror
@@ -57,10 +66,15 @@ $(NAME) : $(LIBFT) $(OBJS_DIR) $(OBJS)
 
 $(OBJS_DIR)%.o : $(SRCS_DIR)%.c
 	@$(CC) $(СFLAGS) $(INCLUDES) -c $< -o $@
-
+	
 $(OBJS_DIR) :
 	@mkdir -p $(OBJS_DIR)
 	@echo "$(NAME): $(BLUE)creating $(NAME)$(RESET)"
+
+bonus : $(LIBFT) $(OBJS_DIR) $(BONUS_OBJ)
+	@$(CC) $(LIBFT) $(LIBRARIES) $(INCLUDES) $(BONUS_OBJ) -o $(NAME)_bonus
+	@echo "$(NAME): $(BLUE)$(NAME)_bonus object files were created$(RESET)"
+	@echo "$(NAME): $(GREEN)$(NAME)_bonus was created$(RESET)"
 
 $(LIBFT) :
 	@echo "$(NAME): $(BLUE)creating $(LIBA)$(RESET)"
@@ -76,6 +90,7 @@ fclean : clean
 	@echo "$(NAME): $(RED)$(NAME) was deleted$(RESET)"
 	@$(RM) $(LIBFT)
 	@echo "$(NAME): $(RED)$(LIBA) was deleted$(RESET)"
+	@$(RM) $(NAME)_bonus
 
 re : fclean all
 

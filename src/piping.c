@@ -121,10 +121,10 @@ void	pipex(t_data data)
 	int	in;
 	int	out;
 
-	in = open(data.argv[1], O_RDONLY);
+	in = open(data.argv[1], O_RDONLY, 00774);
 	if (in == -1)
 		errno_exit(NULL);
-	out = open(data.argv[data.ind], O_WRONLY | O_CREAT | O_TRUNC);
+	out = open(data.argv[data.ind], O_WRONLY | O_CREAT | O_TRUNC, 00774);
 	if (out == -1)
 		errno_exit(NULL);
 	if (pipe(fd) == -1)
@@ -136,5 +136,5 @@ void	pipex(t_data data)
 		pipe_out(data, fd, out);
 	else
 		pipe_in(data, fd, in);
-	wait(0);
+	wait(NULL);
 }
