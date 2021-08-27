@@ -21,18 +21,32 @@ void	validation_of_args(int argc, char *argv[])
 {
 	if (argc < 7)
 		error_exit("Wrong usage, not enough args", 1);
-	if (access(argv[1], F_OK) == -1 || access(argv[1], R_OK) == -1)
+	if (ft_strcmp(argv[1], "here_doc") == 0)
+		argv++;
+	else if (access(argv[1], F_OK) == -1 || access(argv[1], R_OK) == -1)
 		errno_exit(argv[1]);
 }
 
 int	main(int argc, char *argv[], char *envp[])
 {
 	t_data	data;
+	char *line;
+	char *pridor;
 
-	validation_of_args(argc, argv);
-	initialize_data(argc, argv, envp, &data);
-	parse_commands(&data);
-	parse_paths(&data);
-	pipex(data);
-    return 0;
+	while (1)
+	{
+		get_next_line(0, &line);
+		if (ft_strcmp(line, argv[1]) == 0)
+			break;
+		line = ft_strjoin(line, "\n");
+		pridor = ft_strjoin(pridor, line);
+		
+	}
+	printf("\n\n%s\n\n", pridor);
+	// validation_of_args(argc, argv);
+	// initialize_data(argc, argv, envp, &data);
+	// parse_commands(&data);
+	// parse_paths(&data);
+	// pipex(data);
+    // return 0;
 }

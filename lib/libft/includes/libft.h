@@ -1,6 +1,7 @@
 #ifndef LIBFT_H
 # define LIBFT_H
 
+# define BUFFER_SIZE 1
 # include <stdlib.h>
 # include <unistd.h>
 
@@ -57,5 +58,11 @@ int			ft_strcmp(const char *s1, const char *s2);
 int			ft_isspace(int c);
 void		ft_putstrnewline(const char *str);
 int			ft_split_len(char **s);
+int			get_next_line(int fd, char **line);
+int			get_ft_strchr(const char *s, int c);
+size_t		get_ft_strlen(const char *s);
+char		*get_ft_strdupchr(const char *s1, unsigned char c);
+char		*get_ft_strjoin(char const *s1, char const *s2);
+void		ft_free_split(char **s);
 
 #endif

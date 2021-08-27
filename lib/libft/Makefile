@@ -6,7 +6,7 @@
 #    By: nephilister <nephilister@student.42.fr>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/04/21 12:30:03 by cjoanne           #+#    #+#              #
-#    Updated: 2021/08/23 16:20:19 by nephilister      ###   ########.fr        #
+#    Updated: 2021/08/18 01:19:12 by nephilister      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -58,7 +58,10 @@ SRCS_LIST =	ft_isdigit.c\
 			ft_lstmap.c\
 			ft_lstiter.c\
 			ft_putstrnewline.c\
-			ft_split_len.c
+			ft_split_len.c\
+			get_next_line.c\
+			get_next_line_utils.c\
+			ft_free_split.c
 SRCS_DIR = srcs/
 SRCS = $(addprefix $(SRCS_DIR), $(SRCS_LIST))
 
@@ -87,7 +90,7 @@ $(OBJS_DIR) :
 	@mkdir -p $(OBJS_DIR)
 
 $(OBJS_DIR)%.o : $(SRCS_DIR)%.c
-	@gcc $(FLAGS) $(INCLUDES) -c $< -o $@
+	@gcc -g $(FLAGS) $(INCLUDES) -c $< -o $@
 
 clean :
 	@rm -rf $(OBJS_DIR)

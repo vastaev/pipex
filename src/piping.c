@@ -58,64 +58,6 @@ void	pipe_out(t_data data, int *fd, int out)
 
 void	pipex(t_data data)
 {
-//	int	pids[data.cntCmnds];
-//	int	pipes[data.cntCmnds + 1][2];
-//	int	i;
-//	int	j;
-//	int in;
-//	int out;
-//
-//	i = 0;
-//	while (i < data.cntCmnds + 1)
-//	{
-//		if (pipe(pipes[i]) == -1)
-//			errno_exit(NULL);
-//		i++;
-//	}
-//	i = 0;
-//	while (i < data.cntCmnds)
-//	{
-//		pids[i] = fork();
-//		if (pids[i] == -1)
-//			errno_exit(NULL);
-//		if (pids[i] == 0)
-//		{
-//			j = 0;
-//			while (j < data.cntCmnds + 1)
-//			{
-//				if (i != j)
-//					close(pipes[j][0]);
-//				if (i + 1 != j)
-//					close(pipes[j][1]);
-//				j++;
-//			}
-//			dup2(pipes[i][0], STDIN_FILENO);
-//			dup2(pipes[i + 1][1], STDOUT_FILENO);
-//			run_command(&data, i);
-//			close(pipes[i][0]);
-//			close(pipes[i + 1][1]);
-//			return;
-//		}
-//		i++;
-//	}
-//	j = 0;
-//	while (j < data.cntCmnds + 1)
-//	{
-//		if (j != data.cntCmnds)
-//			close(pipes[j][0]);
-//		if (j != 0)
-//			close(pipes[j][1]);
-//		j++;
-//	}
-//	in = open(data.argv[1], O_RDONLY, 0644);
-//	dup2(in, STDIN_FILENO);
-////	dup2(pipes[0][1], STDOUT_FILENO);
-//	dup2(pipes[data.cntCmnds - 1][1], STDIN_FILENO);
-//	out = open(data.argv[data.ind], O_WRONLY | O_CREAT | O_TRUNC, 0774);
-//	dup2(out, STDOUT_FILENO);
-//	i = 0;
-//	while (i++ < data.cntCmnds)
-//		waitpid(pids[i], NULL, 0);
 	int pid;
 	int fd[2];
 	int	in;
