@@ -67,10 +67,9 @@ void	redirect_heredoc(t_data data)
 	pid = fork();
 	if (pid)
 	{
-		wait(0);
+		wait(NULL);
 		close(fd[1]);
 		dup2(fd[0], STDIN_FILENO);
-		// waitpid(pid, NULL, 0);
 	}
 	else
 		input_taking(data, fd);
@@ -79,19 +78,18 @@ void	redirect_heredoc(t_data data)
 void	input_taking(t_data data, int *fd)
 {
 	char	*line;
-	char	*text;
 
 	while (1)
 	{
-		// ft_putstr_fd("heredoc> ", 1);
+		ft_putstr_fd("pipe heredoc> ", 1);
 		get_next_line(0, &line);
-		if (ft_strcmp(line, "loh") == 0)
+		if (ft_strcmp(line, data.argv[2]) == 0)
 			break;
 		line = ft_strjoin(line, "\n");
-		text = ft_strjoin(text, line);
+		if (line)
+			write(fd[1], line, ft_strlen(line));
 	}
-	if (text)
-		write(fd[1], text, ft_strlen(text));
+	
 	close(fd[0]);
 	close(fd[1]);
 	exit(0);
@@ -99,14 +97,12 @@ void	input_taking(t_data data, int *fd)
 
 void	pipex(t_data data)
 {
-	int 	fdin;
-	int 	fdout;
-	char	*text;
-	int i = 1;
+	int		fdin;
+	int		fdout;
+	int		i;
 
-	fdout = open(data.argv[data.ind], O_WRONLY | O_CREAT | O_TRUNC, 00774);
-	dup2(fdout, STDOUT_FILENO);
-	if (ft_strcmp(data.argv[1], "here_doc") != 0)
+	i = 1;
+	if (data.hereDoc != 1)
 	{
 		fdin = open(data.argv[1], O_RDONLY, 00774);
 		dup2(fdin, STDIN_FILENO);
@@ -114,6 +110,8 @@ void	pipex(t_data data)
 	}
 	else
 		redirect_heredoc(data);
+	fdout = open(data.argv[data.ind], O_WRONLY | O_CREAT | O_TRUNC, 00774);
+	dup2(fdout, STDOUT_FILENO);
 	while (i < (data.cntCmnds - 1))
 	{
 		redirect(&data, i, 1);

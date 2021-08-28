@@ -5,7 +5,10 @@ void	parse_commands(t_data *data)
 	int	i;
 	int	j;
 
-	j = 0;
+	if (data->hereDoc == 1)
+		j = 1;
+	else 
+		j = 0;
 	i = 0;
 	while (i < data->cntCmnds)
 	{

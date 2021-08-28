@@ -22,6 +22,7 @@ typedef struct s_data
 	char	***cmnds;
 	char	**paths;
 	int		pathsLen;
+	int		hereDoc;
 } t_data;
 
 void	error_exit(char *str, int exitCode);
