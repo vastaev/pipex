@@ -6,7 +6,7 @@
 /*   By: cjoanne <cjoanne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/28 11:30:53 by cjoanne           #+#    #+#             */
-/*   Updated: 2021/08/28 11:43:29 by cjoanne          ###   ########.fr       */
+/*   Updated: 2021/08/28 18:15:47 by cjoanne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,14 +79,18 @@ void	pipex(t_data data)
 	i = 1;
 	if (data.hereDoc != 1)
 	{
+		fdout = open(data.argv[data.ind], O_WRONLY | O_CREAT | O_TRUNC, 00774);
+		dup2(fdout, STDOUT_FILENO);
 		fdin = open(data.argv[1], O_RDONLY, 00774);
 		dup2(fdin, STDIN_FILENO);
 		redirect(&data, 0, fdin);
 	}
 	else
+	{
 		redirect_heredoc(data);
-	fdout = open(data.argv[data.ind], O_WRONLY | O_CREAT | O_TRUNC, 00774);
-	dup2(fdout, STDOUT_FILENO);
+		fdout = open(data.argv[data.ind], O_WRONLY | O_CREAT | O_APPEND, 00774);
+		dup2(fdout, STDOUT_FILENO);
+	}
 	while (i < (data.cntCmnds - 1))
 	{
 		redirect(&data, i, 1);
@@ -94,3 +98,9 @@ void	pipex(t_data data)
 	}
 	run_command(&data, data.cntCmnds - 1);
 }
+
+/* TODO: фришить память
+* Везде где можно проверки на -1
+* Сообщение о неизвестной команде
+* Подогнать под норму
+*/

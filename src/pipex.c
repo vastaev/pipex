@@ -6,7 +6,7 @@
 /*   By: cjoanne <cjoanne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/28 11:30:49 by cjoanne           #+#    #+#             */
-/*   Updated: 2021/08/28 11:33:51 by cjoanne          ###   ########.fr       */
+/*   Updated: 2021/08/28 13:25:25 by cjoanne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	initialize_data(int argc, char *argv[], char *envp[], t_data *data)
 
 void	validation_of_args(int argc, char *argv[])
 {
-	if (argc != 7)
+	if (argc < 4)
 		error_exit("Wrong usage, non-expected args number", 1);
 	if (access(argv[1], F_OK) == -1 || access(argv[1], R_OK) == -1)
 		errno_exit(argv[1]);
