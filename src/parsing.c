@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parsing.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cjoanne <cjoanne@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/08/28 11:30:43 by cjoanne           #+#    #+#             */
+/*   Updated: 2021/08/28 11:37:24 by cjoanne          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "pipex.h"
 
 void	parse_commands(t_data *data)
@@ -7,7 +19,7 @@ void	parse_commands(t_data *data)
 
 	if (data->hereDoc == 1)
 		j = 1;
-	else 
+	else
 		j = 0;
 	i = 0;
 	while (i < data->cntCmnds)

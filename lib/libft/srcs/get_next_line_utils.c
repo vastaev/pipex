@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_next_line_utils.c                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cjoanne <cjoanne@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/08/28 12:39:49 by cjoanne           #+#    #+#             */
+/*   Updated: 2021/08/28 12:40:04 by cjoanne          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "libft.h"
 
 static void	*get_ft_memcpy(void *dst, const void *src, size_t n)
@@ -66,7 +78,7 @@ char	*get_ft_strjoin(char const *s1, char const *s2)
 	int		i;
 	int		j;
 	int		first_len;
-	int	 	second_len;
+	int		second_len;
 
 	i = 0;
 	j = 0;

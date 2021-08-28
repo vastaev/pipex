@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   piping_bonus.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cjoanne <cjoanne@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/08/28 11:30:53 by cjoanne           #+#    #+#             */
+/*   Updated: 2021/08/28 11:43:29 by cjoanne          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "pipex.h"
 
 void	input_taking(t_data data, int *fd);
@@ -23,7 +35,7 @@ void	run_command(t_data *data, int i)
 	char	*tmpCmnd;
 
 	ind = data->pathsLen - 1;
-	tmpCmnd =  data->cmnds[i][0];
+	tmpCmnd = data->cmnds[i][0];
 	while (get_next_path(data, ind, i, tmpCmnd))
 	{
 		if (access(data->cmnds[i][0], F_OK) == 0)
@@ -58,48 +70,11 @@ void	redirect(t_data *data, int i, int fdIn)
 	}
 }
 
-void	redirect_heredoc(t_data data)
-{
-	int	pid;
-	int	fd[2];
-
-	pipe(fd);
-	pid = fork();
-	if (pid)
-	{
-		wait(NULL);
-		close(fd[1]);
-		dup2(fd[0], STDIN_FILENO);
-	}
-	else
-		input_taking(data, fd);
-}
-
-void	input_taking(t_data data, int *fd)
-{
-	char	*line;
-
-	while (1)
-	{
-		ft_putstr_fd("pipe heredoc> ", 1);
-		get_next_line(0, &line);
-		if (ft_strcmp(line, data.argv[2]) == 0)
-			break;
-		line = ft_strjoin(line, "\n");
-		if (line)
-			write(fd[1], line, ft_strlen(line));
-	}
-	
-	close(fd[0]);
-	close(fd[1]);
-	exit(0);
-}
-
 void	pipex(t_data data)
 {
-	int		fdin;
-	int		fdout;
-	int		i;
+	int	fdin;
+	int	fdout;
+	int	i;
 
 	i = 1;
 	if (data.hereDoc != 1)

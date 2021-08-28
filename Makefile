@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: nephilister <nephilister@student.42.fr>    +#+  +:+       +#+         #
+#    By: cjoanne <cjoanne@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/04/21 12:30:03 by cjoanne           #+#    #+#              #
-#    Updated: 2021/08/28 07:53:18 by nephilister      ###   ########.fr        #
+#    Updated: 2021/08/28 12:41:12 by cjoanne          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,8 @@ OBJS		=	$(addprefix $(OBJS_DIR), $(OBJS_LIST))
 BONUS_LIST	=	errors.c\
 				parsing.c\
 				pipex_bonus.c\
-				piping_bonus.c
+				piping_bonus.c\
+				redirect_bonus.c
 BONUS_SRC	=	$(addprefix $(SRCS_DIR), $(BONUS_LIST))
 
 BONUS_OBJ_LIST	= $(patsubst %.c, %.o, $(BONUS_LIST))

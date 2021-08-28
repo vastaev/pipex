@@ -6,7 +6,7 @@
 /*   By: cjoanne <cjoanne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/28 00:46:21 by nephilister       #+#    #+#             */
-/*   Updated: 2021/08/28 11:26:12 by cjoanne          ###   ########.fr       */
+/*   Updated: 2021/08/28 11:34:52 by cjoanne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,5 +51,5 @@ int	main(int argc, char *argv[], char *envp[])
 	parse_commands(&data);
 	parse_paths(&data);
 	pipex(data);
-    return 0;
+	return (0);
 }
