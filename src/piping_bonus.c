@@ -1,5 +1,7 @@
 #include "pipex.h"
 
+void	input_taking(t_data data, int *fd);
+
 int	get_next_path(t_data *data, int ind, int i, char *cmnd)
 {
 	char	*tmp;
@@ -56,16 +58,62 @@ void	redirect(t_data *data, int i, int fdIn)
 	}
 }
 
+void	redirect_heredoc(t_data data)
+{
+	int	pid;
+	int	fd[2];
+
+	pipe(fd);
+	pid = fork();
+	if (pid)
+	{
+		wait(0);
+		close(fd[1]);
+		dup2(fd[0], STDIN_FILENO);
+		// waitpid(pid, NULL, 0);
+	}
+	else
+		input_taking(data, fd);
+}
+
+void	input_taking(t_data data, int *fd)
+{
+	char	*line;
+	char	*text;
+
+	while (1)
+	{
+		// ft_putstr_fd("heredoc> ", 1);
+		get_next_line(0, &line);
+		if (ft_strcmp(line, "loh") == 0)
+			break;
+		line = ft_strjoin(line, "\n");
+		text = ft_strjoin(text, line);
+	}
+	if (text)
+		write(fd[1], text, ft_strlen(text));
+	close(fd[0]);
+	close(fd[1]);
+	exit(0);
+}
+
 void	pipex(t_data data)
 {
-	int fdin;
-	int fdout;
+	int 	fdin;
+	int 	fdout;
+	char	*text;
 	int i = 1;
-	fdin = open(data.argv[1], O_RDONLY, 00774);
+
 	fdout = open(data.argv[data.ind], O_WRONLY | O_CREAT | O_TRUNC, 00774);
-	dup2(fdin, STDIN_FILENO);
 	dup2(fdout, STDOUT_FILENO);
-	redirect(&data, 0, fdin);
+	if (ft_strcmp(data.argv[1], "here_doc") != 0)
+	{
+		fdin = open(data.argv[1], O_RDONLY, 00774);
+		dup2(fdin, STDIN_FILENO);
+		redirect(&data, 0, fdin);
+	}
+	else
+		redirect_heredoc(data);
 	while (i < (data.cntCmnds - 1))
 	{
 		redirect(&data, i, 1);

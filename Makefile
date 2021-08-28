@@ -6,17 +6,18 @@
 #    By: nephilister <nephilister@student.42.fr>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/04/21 12:30:03 by cjoanne           #+#    #+#              #
-#    Updated: 2021/08/24 08:12:21 by nephilister      ###   ########.fr        #
+#    Updated: 2021/08/28 07:53:18 by nephilister      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = pipex
+B_NAME = pipex_bonus
 
+SRCS_DIR	=	src/
 SRCS_LIST	=	pipex.c\
 				errors.c\
 				parsing.c\
 				piping.c
-SRCS_DIR	=	src/
 SRCS		=	$(addprefix $(SRCS_DIR), $(SRCS_LIST))
 
 OBJS_LIST	=	$(patsubst %.c, %.o, $(SRCS_LIST))
@@ -71,10 +72,12 @@ $(OBJS_DIR) :
 	@mkdir -p $(OBJS_DIR)
 	@echo "$(NAME): $(BLUE)creating $(NAME)$(RESET)"
 
-bonus : $(LIBFT) $(OBJS_DIR) $(BONUS_OBJ)
-	@$(CC) $(LIBFT) $(LIBRARIES) $(INCLUDES) $(BONUS_OBJ) -o $(NAME)_bonus
-	@echo "$(NAME): $(BLUE)$(NAME)_bonus object files were created$(RESET)"
-	@echo "$(NAME): $(GREEN)$(NAME)_bonus was created$(RESET)"
+bonus : $(B_NAME)
+
+$(B_NAME) : $(LIBFT) $(OBJS_DIR) $(BONUS_OBJ) 
+	@$(CC) $(LIBFT) $(LIBRARIES) $(INCLUDES) $(BONUS_OBJ) -o $(B_NAME)
+	@echo "$(NAME): $(BLUE)$(B_NAME) object files were created$(RESET)"
+	@echo "$(NAME): $(GREEN)$(B_NAME) was created$(RESET)"
 
 $(LIBFT) :
 	@echo "$(NAME): $(BLUE)creating $(LIBA)$(RESET)"
