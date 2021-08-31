@@ -6,7 +6,7 @@
 /*   By: cjoanne <cjoanne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/28 12:37:21 by cjoanne           #+#    #+#             */
-/*   Updated: 2021/08/28 12:37:22 by cjoanne          ###   ########.fr       */
+/*   Updated: 2021/08/31 15:56:33 by cjoanne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,13 @@
 # include <fcntl.h>
 # include "libft.h"
 # include <sys/errno.h>
+
+enum e_openmode
+{
+	INFILE = 1,
+	OUTFILE = 2,
+	HEREDOC_OUT = 3
+};
 
 typedef struct s_data
 {

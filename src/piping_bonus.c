@@ -6,13 +6,24 @@
 /*   By: cjoanne <cjoanne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/28 11:30:53 by cjoanne           #+#    #+#             */
-/*   Updated: 2021/08/28 11:43:29 by cjoanne          ###   ########.fr       */
+/*   Updated: 2021/08/31 16:27:12 by cjoanne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-void	input_taking(t_data data, int *fd);
+int	ft_open(int mode, int fd, t_data data)
+{
+	if (mode == OUTFILE)
+		fd = open(data.argv[data.ind], O_WRONLY | O_CREAT | O_TRUNC, 00774);
+	else if (mode == INFILE)
+		fd = open(data.argv[1], O_RDONLY, 00774);
+	else if (mode == HEREDOC_OUT)
+		fd = open(data.argv[data.ind], O_WRONLY | O_CREAT | O_APPEND, 00774);
+	if (fd == -1)
+		errno_exit(NULL);
+	return (fd);
+}
 
 int	get_next_path(t_data *data, int ind, int i, char *cmnd)
 {
@@ -56,13 +67,15 @@ void	redirect(t_data *data, int i, int fdIn)
 	if (pid)
 	{
 		close(fd[1]);
-		dup2(fd[0], STDIN_FILENO);
+		if (dup2(fd[0], STDIN_FILENO) == -1)
+			errno_exit(NULL);
 		waitpid(pid, NULL, 0);
 	}
 	else
 	{
 		close(fd[0]);
-		dup2(fd[1], STDOUT_FILENO);
+		if (dup2(fd[1], STDOUT_FILENO) == -1)
+			errno_exit(NULL);
 		if (fdIn == STDIN_FILENO)
 			exit(1);
 		else
@@ -79,18 +92,20 @@ void	pipex(t_data data)
 	i = 1;
 	if (data.hereDoc != 1)
 	{
-		fdin = open(data.argv[1], O_RDONLY, 00774);
-		dup2(fdin, STDIN_FILENO);
+		fdout = ft_open(OUTFILE, fdout, data);
+		fdin = ft_open(INFILE, fdin, data);
+		if (dup2(fdin, STDIN_FILENO) == -1 || dup2(fdout, STDOUT_FILENO) == -1)
+			errno_exit(NULL);
 		redirect(&data, 0, fdin);
 	}
 	else
-		redirect_heredoc(data);
-	fdout = open(data.argv[data.ind], O_WRONLY | O_CREAT | O_TRUNC, 00774);
-	dup2(fdout, STDOUT_FILENO);
-	while (i < (data.cntCmnds - 1))
 	{
-		redirect(&data, i, 1);
-		i++;
+		redirect_heredoc(data);
+		fdout = ft_open(HEREDOC_OUT, fdout, data);
+		if (dup2(fdout, STDOUT_FILENO) == -1)
+			errno_exit(NULL);
 	}
+	while (i < (data.cntCmnds - 1))
+		redirect(&data, i++, 1);
 	run_command(&data, data.cntCmnds - 1);
 }
