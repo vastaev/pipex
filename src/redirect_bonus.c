@@ -6,7 +6,7 @@
 /*   By: cjoanne <cjoanne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/28 12:36:44 by cjoanne           #+#    #+#             */
-/*   Updated: 2021/08/28 12:36:45 by cjoanne          ###   ########.fr       */
+/*   Updated: 2021/08/31 17:39:10 by cjoanne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ void	redirect_heredoc(t_data data)
 		wait(NULL);
 		close(fd[1]);
 		dup2(fd[0], STDIN_FILENO);
+		close(fd[0]);
 	}
 	else
 		input_taking(data, fd);

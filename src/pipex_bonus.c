@@ -6,19 +6,19 @@
 /*   By: cjoanne <cjoanne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/28 00:46:21 by nephilister       #+#    #+#             */
-/*   Updated: 2021/08/28 11:34:52 by cjoanne          ###   ########.fr       */
+/*   Updated: 2021/08/31 18:10:20 by cjoanne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
-/* TODO правильный возврат ошибки после execve
- * название файла ``...'' такой же как ввод комманды
- */
 
 void	initialize_data(int argc, char *argv[], char *envp[], t_data *data)
 {
 	data->ind = argc - 1;
-	data->cntCmnds = (argc - 3) / 2;
+	if (data->hereDoc != 1)
+		data->cntCmnds = (argc - 3) / 2;
+	else
+		data->cntCmnds = (argc - 4) / 2;
 	data->cmnds = malloc(sizeof(*data->cmnds) * (data->cntCmnds + 1));
 	if (data->cmnds == NULL)
 		error_exit("Malloc error\n", 2);

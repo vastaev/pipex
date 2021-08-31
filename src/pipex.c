@@ -6,14 +6,11 @@
 /*   By: cjoanne <cjoanne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/28 11:30:49 by cjoanne           #+#    #+#             */
-/*   Updated: 2021/08/31 15:19:56 by cjoanne          ###   ########.fr       */
+/*   Updated: 2021/08/31 17:02:18 by cjoanne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
-/* TODO правильный возврат ошибки после execve
- * название файла ``...'' такой же как ввод комманды
- */
 
 void	initialize_data(int argc, char *argv[], char *envp[], t_data *data)
 {

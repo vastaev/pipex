@@ -6,7 +6,7 @@
 /*   By: cjoanne <cjoanne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/28 11:30:53 by cjoanne           #+#    #+#             */
-/*   Updated: 2021/08/31 16:27:12 by cjoanne          ###   ########.fr       */
+/*   Updated: 2021/08/31 18:15:46 by cjoanne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ void	redirect(t_data *data, int i, int fdIn)
 		close(fd[1]);
 		if (dup2(fd[0], STDIN_FILENO) == -1)
 			errno_exit(NULL);
+		close(fd[0]);
 		waitpid(pid, NULL, 0);
 	}
 	else
@@ -76,6 +77,7 @@ void	redirect(t_data *data, int i, int fdIn)
 		close(fd[0]);
 		if (dup2(fd[1], STDOUT_FILENO) == -1)
 			errno_exit(NULL);
+		close(fd[1]);
 		if (fdIn == STDIN_FILENO)
 			exit(1);
 		else
