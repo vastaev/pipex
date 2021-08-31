@@ -6,7 +6,7 @@
 /*   By: cjoanne <cjoanne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/28 12:36:44 by cjoanne           #+#    #+#             */
-/*   Updated: 2021/08/31 19:10:02 by cjoanne          ###   ########.fr       */
+/*   Updated: 2021/09/01 01:31:46 by cjoanne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,5 +47,7 @@ void	redirect_heredoc(t_data data)
 		waitpid(pid, NULL, 0);
 	}
 	else
+	{
 		input_taking(data, fd);
+	}
 }

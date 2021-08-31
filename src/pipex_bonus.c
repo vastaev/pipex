@@ -6,7 +6,7 @@
 /*   By: cjoanne <cjoanne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/28 00:46:21 by nephilister       #+#    #+#             */
-/*   Updated: 2021/09/01 00:09:46 by cjoanne          ###   ########.fr       */
+/*   Updated: 2021/09/01 02:00:17 by cjoanne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ void	initialize_data(int argc, char *argv[], char *envp[], t_data *data)
 
 void	validation_of_args(int argc, char *argv[], t_data *data)
 {
-	
 	if (ft_strcmp(argv[1], "here_doc") == 0)
 		data->hereDoc = 1;
 	else if (access(argv[1], F_OK) == -1 || access(argv[1], R_OK) == -1)
@@ -40,7 +39,6 @@ void	validation_of_args(int argc, char *argv[], t_data *data)
 		error_exit("Bad usage! ./pipex here_doc LIMITER cmd cmd1 file", 3);
 	else if (argc < 5)
 		error_exit("Bad usage! ./pipex file1 cmd1 cmd2 cmd3 ... cmdn file", 4);
-	
 }
 
 int	main(int argc, char *argv[], char *envp[])
