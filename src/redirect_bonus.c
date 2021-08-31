@@ -6,7 +6,7 @@
 /*   By: cjoanne <cjoanne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/28 12:36:44 by cjoanne           #+#    #+#             */
-/*   Updated: 2021/08/28 12:36:45 by cjoanne          ###   ########.fr       */
+/*   Updated: 2021/09/01 01:31:46 by cjoanne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ static void	input_taking(t_data data, int *fd)
 {
 	char	*line;
 
+	close(fd[0]);
 	while (1)
 	{
 		ft_putstr_fd("pipe heredoc> ", 1);
@@ -26,7 +27,6 @@ static void	input_taking(t_data data, int *fd)
 		if (line)
 			write(fd[1], line, ft_strlen(line));
 	}
-	close(fd[0]);
 	close(fd[1]);
 	exit(0);
 }
@@ -40,10 +40,14 @@ void	redirect_heredoc(t_data data)
 	pid = fork();
 	if (pid)
 	{
-		wait(NULL);
 		close(fd[1]);
-		dup2(fd[0], STDIN_FILENO);
+		if (dup2(fd[0], STDIN_FILENO) == -1)
+			errno_exit(NULL);
+		close(fd[0]);
+		waitpid(pid, NULL, 0);
 	}
 	else
+	{
 		input_taking(data, fd);
+	}
 }

@@ -6,19 +6,16 @@
 /*   By: cjoanne <cjoanne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/28 11:30:49 by cjoanne           #+#    #+#             */
-/*   Updated: 2021/08/31 15:19:56 by cjoanne          ###   ########.fr       */
+/*   Updated: 2021/09/01 00:17:00 by cjoanne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
-/* TODO правильный возврат ошибки после execve
- * название файла ``...'' такой же как ввод комманды
- */
 
 void	initialize_data(int argc, char *argv[], char *envp[], t_data *data)
 {
 	data->ind = argc - 1;
-	data->cntCmnds = (argc - 3) / 2;
+	data->cntCmnds = (argc - 3);
 	data->cmnds = malloc(sizeof(*data->cmnds) * (data->cntCmnds + 1));
 	if (data->cmnds == NULL)
 		error_exit("Malloc error\n", 2);
@@ -31,8 +28,8 @@ void	initialize_data(int argc, char *argv[], char *envp[], t_data *data)
 
 void	validation_of_args(int argc, char *argv[])
 {
-	if (argc != 7)
-		error_exit("Wrong usage, non-expected args number", 1);
+	if (argc < 5)
+		error_exit("Bad usage! ./pipex file1 cmd1 cmd2 file", 4);
 	if (access(argv[1], F_OK) == -1 || access(argv[1], R_OK) == -1)
 		errno_exit(argv[1]);
 }

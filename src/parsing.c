@@ -6,7 +6,7 @@
 /*   By: cjoanne <cjoanne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/28 11:30:43 by cjoanne           #+#    #+#             */
-/*   Updated: 2021/08/31 01:12:18 by cjoanne          ###   ########.fr       */
+/*   Updated: 2021/09/01 00:12:47 by cjoanne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,11 @@ void	parse_commands(t_data *data)
 	i = 0;
 	while (i < data->cntCmnds)
 	{
-		data->cmnds[i] = malloc(sizeof(**data->cmnds) * 3);
-		data->cmnds[i][0] = data->argv[j + 2];
-		data->cmnds[i][1] = data->argv[j + 3];
-		data->cmnds[i][2] = NULL;
-		j += 2;
+		data->cmnds[i] = ft_split(data->argv[j + 2], ' ');
+		if (!data->cmnds[i])
+			error_exit("Error when mallocking for commands!\n", 4);
 		i++;
+		j++;
 	}
 }
 

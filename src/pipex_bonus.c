@@ -6,22 +6,22 @@
 /*   By: cjoanne <cjoanne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/28 00:46:21 by nephilister       #+#    #+#             */
-/*   Updated: 2021/08/28 11:34:52 by cjoanne          ###   ########.fr       */
+/*   Updated: 2021/09/01 02:00:17 by cjoanne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
-/* TODO правильный возврат ошибки после execve
- * название файла ``...'' такой же как ввод комманды
- */
 
 void	initialize_data(int argc, char *argv[], char *envp[], t_data *data)
 {
 	data->ind = argc - 1;
-	data->cntCmnds = (argc - 3) / 2;
+	if (data->hereDoc != 1)
+		data->cntCmnds = (argc - 3);
+	else
+		data->cntCmnds = (argc - 4);
 	data->cmnds = malloc(sizeof(*data->cmnds) * (data->cntCmnds + 1));
 	if (data->cmnds == NULL)
-		error_exit("Malloc error\n", 2);
+		error_exit("Malloc error", 2);
 	data->cmnds[data->cntCmnds] = NULL;
 	data->infile = argv[1];
 	data->outfile = argv[data->ind];
@@ -31,15 +31,14 @@ void	initialize_data(int argc, char *argv[], char *envp[], t_data *data)
 
 void	validation_of_args(int argc, char *argv[], t_data *data)
 {
-	if (argc < 7)
-		error_exit("Wrong usage, not enough args", 1);
 	if (ft_strcmp(argv[1], "here_doc") == 0)
-	{
 		data->hereDoc = 1;
-		return ;
-	}
 	else if (access(argv[1], F_OK) == -1 || access(argv[1], R_OK) == -1)
 		errno_exit(argv[1]);
+	if (data->hereDoc == 1 && argc < 6)
+		error_exit("Bad usage! ./pipex here_doc LIMITER cmd cmd1 file", 3);
+	else if (argc < 5)
+		error_exit("Bad usage! ./pipex file1 cmd1 cmd2 cmd3 ... cmdn file", 4);
 }
 
 int	main(int argc, char *argv[], char *envp[])
