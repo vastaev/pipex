@@ -6,7 +6,7 @@
 /*   By: cjoanne <cjoanne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/28 11:30:53 by cjoanne           #+#    #+#             */
-/*   Updated: 2021/08/31 18:15:46 by cjoanne          ###   ########.fr       */
+/*   Updated: 2021/09/01 00:31:53 by cjoanne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ void	pipex(t_data data)
 	int	fdout;
 	int	i;
 
-	i = 1;
+	i = 0;
 	if (data.hereDoc != 1)
 	{
 		fdout = ft_open(OUTFILE, fdout, data);
@@ -107,7 +107,7 @@ void	pipex(t_data data)
 		if (dup2(fdout, STDOUT_FILENO) == -1)
 			errno_exit(NULL);
 	}
-	while (i < (data.cntCmnds - 1))
+	while (i < (data.cntCmnds - 2))
 		redirect(&data, i++, 1);
 	run_command(&data, data.cntCmnds - 1);
 }

@@ -6,7 +6,7 @@
 /*   By: cjoanne <cjoanne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/28 11:30:56 by cjoanne           #+#    #+#             */
-/*   Updated: 2021/08/31 15:47:23 by cjoanne          ###   ########.fr       */
+/*   Updated: 2021/08/31 20:45:53 by cjoanne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,8 +87,7 @@ void	pipex(t_data data)
 	if (pid == -1)
 		errno_exit(NULL);
 	if (pid == 0)
-		pipe_out(data, fd, out);
-	else
 		pipe_in(data, fd, in);
 	wait(NULL);
+	pipe_out(data, fd, out);
 }
