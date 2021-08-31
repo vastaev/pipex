@@ -6,27 +6,11 @@
 /*   By: cjoanne <cjoanne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/28 11:30:43 by cjoanne           #+#    #+#             */
-/*   Updated: 2021/08/28 18:23:54 by cjoanne          ###   ########.fr       */
+/*   Updated: 2021/08/31 01:12:18 by cjoanne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
-
-void	is_command(t_data *data, int i)
-{
-	int		ind;
-	char	*tmpCmnd;
-
-	ind = data->pathsLen - 1;
-	tmpCmnd = data->cmnds[i][0];
-	while (get_next_path(data, ind, i, tmpCmnd))
-	{
-		if (access(data->cmnds[i][0], F_OK) == 0)
-			return(1);
-		ind--;
-	}
-	return(0);
-}
 
 void	parse_commands(t_data *data)
 {
