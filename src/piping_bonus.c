@@ -6,7 +6,7 @@
 /*   By: cjoanne <cjoanne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/28 11:30:53 by cjoanne           #+#    #+#             */
-/*   Updated: 2021/09/01 10:52:46 by cjoanne          ###   ########.fr       */
+/*   Updated: 2021/09/01 11:29:26 by cjoanne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,9 @@ void	run_command(t_data *data, int i)
 					errno_exit(NULL);
 		ind--;
 	}
+	ft_putstr_fd("pipex: command not found: ", 2);
+	ft_putstr_fd(tmpCmnd, 2);
+	ft_putstr_fd("\n", 2);
 }
 
 void	redirect(t_data *data, int i)
