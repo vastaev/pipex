@@ -6,7 +6,7 @@
 /*   By: cjoanne <cjoanne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/28 11:30:49 by cjoanne           #+#    #+#             */
-/*   Updated: 2021/09/01 00:17:00 by cjoanne          ###   ########.fr       */
+/*   Updated: 2021/09/01 11:13:44 by cjoanne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	initialize_data(int argc, char *argv[], char *envp[], t_data *data)
 
 void	validation_of_args(int argc, char *argv[])
 {
-	if (argc < 5)
+	if (argc != 5)
 		error_exit("Bad usage! ./pipex file1 cmd1 cmd2 file", 4);
 	if (access(argv[1], F_OK) == -1 || access(argv[1], R_OK) == -1)
 		errno_exit(argv[1]);
