@@ -6,7 +6,7 @@
 /*   By: cjoanne <cjoanne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/28 12:36:44 by cjoanne           #+#    #+#             */
-/*   Updated: 2021/09/01 10:39:55 by cjoanne          ###   ########.fr       */
+/*   Updated: 2021/09/01 12:58:04 by cjoanne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 static void	input_taking(t_data data, int *fd)
 {
 	char	*line;
+	char	*tmp;
 
 	close(fd[0]);
 	while (1)
@@ -23,9 +24,12 @@ static void	input_taking(t_data data, int *fd)
 		get_next_line(0, &line);
 		if (ft_strcmp(line, data.argv[2]) == 0)
 			break ;
+		tmp = line;
+		free(tmp);
 		line = ft_strjoin(line, "\n");
 		if (line)
 			write(fd[1], line, ft_strlen(line));
+		free(line);
 	}
 	close(fd[1]);
 	exit(0);
