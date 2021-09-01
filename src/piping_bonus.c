@@ -6,7 +6,7 @@
 /*   By: cjoanne <cjoanne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/28 11:30:53 by cjoanne           #+#    #+#             */
-/*   Updated: 2021/09/01 02:00:27 by cjoanne          ###   ########.fr       */
+/*   Updated: 2021/09/01 11:51:26 by cjoanne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,15 +55,22 @@ void	run_command(t_data *data, int i)
 					errno_exit(NULL);
 		ind--;
 	}
+	ft_putstr_fd("pipex: command not found: ", 2);
+	ft_putstr_fd(tmpCmnd, 2);
+	ft_putstr_fd("\n", 2);
+	exit(5);
 }
 
-void	redirect(t_data *data, int i, int fdIn)
+void	redirect(t_data *data, int i)
 {
 	int	pid;
 	int	fd[2];
 
-	pipe(fd);
+	if (pipe(fd) == -1)
+		errno_exit(NULL);
 	pid = fork();
+	if (pid == -1)
+		errno_exit(NULL);
 	if (pid)
 	{
 		close(fd[1]);
@@ -78,10 +85,7 @@ void	redirect(t_data *data, int i, int fdIn)
 		if (dup2(fd[1], STDOUT_FILENO) == -1)
 			errno_exit(NULL);
 		close(fd[1]);
-		if (fdIn == STDIN_FILENO)
-			exit(1);
-		else
-			run_command(data, i);
+		run_command(data, i);
 	}
 }
 
@@ -91,24 +95,22 @@ void	pipex(t_data data)
 	int	fdout;
 	int	i;
 
+	i = 0;
 	if (data.hereDoc != 1)
 	{
-		i = 1;
 		fdout = ft_open(OUTFILE, fdout, data);
 		fdin = ft_open(INFILE, fdin, data);
 		if (dup2(fdin, STDIN_FILENO) == -1 || dup2(fdout, STDOUT_FILENO) == -1)
 			errno_exit(NULL);
-		redirect(&data, 0, fdin);
 	}
 	else
 	{
-		i = 0;
 		redirect_heredoc(data);
 		fdout = ft_open(HEREDOC_OUT, fdout, data);
 		if (dup2(fdout, STDOUT_FILENO) == -1)
 			errno_exit(NULL);
 	}
 	while (i < (data.cntCmnds - 1))
-		redirect(&data, i++, 1);
+		redirect(&data, i++);
 	run_command(&data, data.cntCmnds - 1);
 }
