@@ -6,7 +6,7 @@
 /*   By: cjoanne <cjoanne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/28 12:36:44 by cjoanne           #+#    #+#             */
-/*   Updated: 2021/09/01 01:31:46 by cjoanne          ###   ########.fr       */
+/*   Updated: 2021/09/01 10:39:55 by cjoanne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static void	input_taking(t_data data, int *fd)
 	close(fd[0]);
 	while (1)
 	{
-		ft_putstr_fd("pipe heredoc> ", 1);
+		ft_putstr_fd("heredoc> ", 1);
 		get_next_line(0, &line);
 		if (ft_strcmp(line, data.argv[2]) == 0)
 			break ;
@@ -36,8 +36,11 @@ void	redirect_heredoc(t_data data)
 	int	pid;
 	int	fd[2];
 
-	pipe(fd);
+	if (pipe(fd) == -1)
+		errno_exit(NULL);
 	pid = fork();
+	if (pid == -1)
+		errno_exit(NULL);
 	if (pid)
 	{
 		close(fd[1]);
