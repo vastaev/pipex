@@ -6,7 +6,7 @@
 #    By: cjoanne <cjoanne@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/04/21 12:30:03 by cjoanne           #+#    #+#              #
-#    Updated: 2021/09/01 00:49:37 by cjoanne          ###   ########.fr        #
+#    Updated: 2021/09/02 21:25:44 by cjoanne          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -61,7 +61,7 @@ LIBA = libft.a
 
 all : $(NAME)
 
-$(NAME) : $(LIBFT) $(OBJS_DIR) $(OBJS)
+$(NAME) : $(LIBFT) $(OBJS_DIR) $(OBJS) $(HEADERS)
 	@$(CC) $(LIBFT) $(LIBRARIES) $(INCLUDES) $(OBJS) -o $(NAME)
 	@echo "$(NAME): $(BLUE)$(NAME) object files were created$(RESET)"
 	@echo "$(NAME): $(GREEN)$(NAME) was created$(RESET)"
@@ -75,7 +75,7 @@ $(OBJS_DIR) :
 
 bonus : $(B_NAME)
 
-$(B_NAME) : $(LIBFT) $(OBJS_DIR) $(BONUS_OBJ)
+$(B_NAME) : $(LIBFT) $(OBJS_DIR) $(BONUS_OBJ) $(HEADERS)
 	@$(CC) $(LIBFT) $(LIBRARIES) $(INCLUDES) $(BONUS_OBJ) -o $(B_NAME)
 	@echo "$(NAME): $(BLUE)$(B_NAME) object files were created$(RESET)"
 	@echo "$(NAME): $(GREEN)$(B_NAME) was created$(RESET)"
