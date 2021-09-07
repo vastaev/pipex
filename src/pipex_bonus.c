@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cjoanne <cjoanne@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nephilister <nephilister@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/28 00:46:21 by nephilister       #+#    #+#             */
-/*   Updated: 2021/09/03 03:39:25 by cjoanne          ###   ########.fr       */
+/*   Updated: 2021/09/07 12:22:02 by nephilister      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	initialize_data(int argc, char *argv[], char *envp[], t_data *data)
 {
 	data->ind = argc - 1;
-	if (data->hereDoc != 1)
+	if (data->flags.here_doc != 1)
 		data->cntCmnds = (argc - 3);
 	else
 		data->cntCmnds = (argc - 4);
@@ -23,22 +23,34 @@ void	initialize_data(int argc, char *argv[], char *envp[], t_data *data)
 	if (data->cmnds == NULL)
 		error_exit("Malloc error", 2);
 	data->cmnds[data->cntCmnds] = NULL;
-	data->infile = argv[1];
-	data->outfile = argv[data->ind];
 	data->argv = argv;
 	data->envp = envp;
 }
 
 void	validation_of_args(int argc, char *argv[], t_data *data)
 {
-	if (ft_strcmp(argv[1], "here_doc") == 0)
-		data->hereDoc = 1;
-	else if (access(argv[1], F_OK) == -1 || access(argv[1], R_OK) == -1)
-		errno_exit(argv[1]);
-	if (data->hereDoc == 1 && argc < 6)
-		error_exit("Bad usage! ./pipex here_doc LIMITER cmd cmd1 file", 3);
-	else if (argc < 5)
-		error_exit("Bad usage! ./pipex file1 cmd1 cmd2 cmd3 ... cmdn file", 4);
+	//если в спаршенной строке есть какой-то из символов пайпа, то передавать флаги
+	int i;
+
+	i = 0;
+	data->fdin = 0;
+	data->fdout = 1;
+	while (argv[i] != '\0')
+	{
+		if (ft_strcmp(argv[i], "<<") == 0)
+			data->fdin =  data.hereDoc = 1;
+		else if (argv[i] == '<')
+		{
+			if (access(argv[1], F_OK) == -1 || access(argv[1], R_OK) == -1)
+				errno_exit(argv[1]);
+			data->fdin = ft_open(INFILE, *data);
+		}
+		else if (argv[i] == '>')
+			data->fdout = ft_open(OUTFILE, *data);
+		else if (ft_strcmp(argv[i], ">>") == 0)
+			data->fdout = ft_open(HEREDOC_OUT, *data);
+		i++;
+	}
 }
 
 int	main(int argc, char *argv[], char *envp[])

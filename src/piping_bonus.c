@@ -3,17 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   piping_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cjoanne <cjoanne@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nephilister <nephilister@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/28 11:30:53 by cjoanne           #+#    #+#             */
-/*   Updated: 2021/09/03 03:46:46 by cjoanne          ###   ########.fr       */
+/*   Updated: 2021/09/07 11:57:55 by nephilister      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-int	ft_open(int mode, int fd, t_data data)
+int	ft_open(int mode, t_data data)
 {
+	int	fd;
+	
 	if (mode == OUTFILE)
 		fd = open(data.argv[data.ind], O_WRONLY | O_CREAT | O_TRUNC, 00774);
 	else if (mode == INFILE)
@@ -94,23 +96,22 @@ void	pipex(t_data data)
 	int	fdin;
 	int	fdout;
 	int	i;
+	int pid;
 
-	i = 0;
-	if (data.hereDoc != 1)
-	{
-		fdout = ft_open(OUTFILE, fdout, data);
-		fdin = ft_open(INFILE, fdin, data);
-		if (dup2(fdin, STDIN_FILENO) == -1 || dup2(fdout, STDOUT_FILENO) == -1)
-			errno_exit(NULL);
-	}
-	else
-	{
+	fdin = 0;
+	fdout = 1;
+	if (data.flags.filein)
+		fdin = ft_open(INFILE, data);
+	else if (data.flags.here_doc)
 		redirect_heredoc(data);
-		fdout = ft_open(HEREDOC_OUT, fdout, data);
-		if (dup2(fdout, STDOUT_FILENO) == -1)
-			errno_exit(NULL);
-	}
+	if (data.flags.fileout)
+		fdout = ft_open(OUTFILE, data);
+	else if (data.flags.appendf)
+		fdout = ft_open(HEREDOC_OUT, data);
 	while (i < (data.cntCmnds - 1))
 		redirect(&data, i++);
-	run_command(&data, data.cntCmnds - 1);
+	pid = fork();
+	if (pid == 0)
+		run_command(&data, data.cntCmnds - 1);
+	return ;
 }

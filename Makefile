@@ -3,37 +3,26 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: cjoanne <cjoanne@student.42.fr>            +#+  +:+       +#+         #
+#    By: nephilister <nephilister@student.42.fr>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/04/21 12:30:03 by cjoanne           #+#    #+#              #
-#    Updated: 2021/09/02 21:25:44 by cjoanne          ###   ########.fr        #
+#    Updated: 2021/09/07 11:59:24 by nephilister      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = pipex
-B_NAME = pipex_bonus
 
 SRCS_DIR	=	src/
-SRCS_LIST	=	pipex.c\
-				errors.c\
+SRCS_LIST	=	errors.c\
 				parsing.c\
-				piping.c
+				pipex_bonus.c\
+				piping_bonus.c\
+				redirect_bonus.c
 SRCS		=	$(addprefix $(SRCS_DIR), $(SRCS_LIST))
 
 OBJS_LIST	=	$(patsubst %.c, %.o, $(SRCS_LIST))
 OBJS_DIR	=	objects/
 OBJS		=	$(addprefix $(OBJS_DIR), $(OBJS_LIST))
-
-
-BONUS_LIST	=	errors.c\
-				parsing.c\
-				pipex_bonus.c\
-				piping_bonus.c\
-				redirect_bonus.c
-BONUS_SRC	=	$(addprefix $(SRCS_DIR), $(BONUS_LIST))
-
-BONUS_OBJ_LIST	= $(patsubst %.c, %.o, $(BONUS_LIST))
-BONUS_OBJ		= $(addprefix $(OBJS_DIR), $(BONUS_OBJ_LIST))
 
 CC 			=	gcc
 CFLAGS		=	-Wall -Wextra -Werror
@@ -72,13 +61,6 @@ $(OBJS_DIR)%.o : $(SRCS_DIR)%.c
 $(OBJS_DIR) :
 	@mkdir -p $(OBJS_DIR)
 	@echo "$(NAME): $(BLUE)creating $(NAME)$(RESET)"
-
-bonus : $(B_NAME)
-
-$(B_NAME) : $(LIBFT) $(OBJS_DIR) $(BONUS_OBJ) $(HEADERS)
-	@$(CC) $(LIBFT) $(LIBRARIES) $(INCLUDES) $(BONUS_OBJ) -o $(B_NAME)
-	@echo "$(NAME): $(BLUE)$(B_NAME) object files were created$(RESET)"
-	@echo "$(NAME): $(GREEN)$(B_NAME) was created$(RESET)"
 
 $(LIBFT) :
 	@echo "$(NAME): $(BLUE)creating $(LIBA)$(RESET)"

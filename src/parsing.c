@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cjoanne <cjoanne@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nephilister <nephilister@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/28 11:30:43 by cjoanne           #+#    #+#             */
-/*   Updated: 2021/09/01 00:12:47 by cjoanne          ###   ########.fr       */
+/*   Updated: 2021/09/07 11:17:20 by nephilister      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	parse_commands(t_data *data)
 	int	i;
 	int	j;
 
-	if (data->hereDoc == 1)
+	if (data->flags.here_doc == 1)
 		j = 1;
 	else
 		j = 0;
