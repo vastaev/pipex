@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex_bonus.c                                      :+:      :+:    :+:   */
+/*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nephilister <nephilister@student.42.fr>    +#+  +:+       +#+        */
+/*   By: cjoanne <cjoanne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/28 00:46:21 by nephilister       #+#    #+#             */
-/*   Updated: 2021/09/07 12:22:02 by nephilister      ###   ########.fr       */
+/*   Updated: 2021/09/08 00:24:20 by cjoanne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,9 @@
 void	initialize_data(int argc, char *argv[], char *envp[], t_data *data)
 {
 	data->ind = argc - 1;
-	if (data->flags.here_doc != 1)
-		data->cntCmnds = (argc - 3);
-	else
-		data->cntCmnds = (argc - 4);
-	data->cmnds = malloc(sizeof(*data->cmnds) * (data->cntCmnds + 1));
+	data->cmnds = malloc(sizeof(*data->cmnds) * 10);
 	if (data->cmnds == NULL)
 		error_exit("Malloc error", 2);
-	data->cmnds[data->cntCmnds] = NULL;
 	data->argv = argv;
 	data->envp = envp;
 }
@@ -38,14 +33,14 @@ void	validation_of_args(int argc, char *argv[], t_data *data)
 	while (argv[i] != '\0')
 	{
 		if (ft_strcmp(argv[i], "<<") == 0)
-			data->fdin =  data.hereDoc = 1;
-		else if (argv[i] == '<')
+			data->fdin =  data->hereDoc = 1;
+		else if (argv[i][0] == '<')
 		{
 			if (access(argv[1], F_OK) == -1 || access(argv[1], R_OK) == -1)
 				errno_exit(argv[1]);
 			data->fdin = ft_open(INFILE, *data);
 		}
-		else if (argv[i] == '>')
+		else if (argv[i][0] == '>')
 			data->fdout = ft_open(OUTFILE, *data);
 		else if (ft_strcmp(argv[i], ">>") == 0)
 			data->fdout = ft_open(HEREDOC_OUT, *data);

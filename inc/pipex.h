@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nephilister <nephilister@student.42.fr>    +#+  +:+       +#+        */
+/*   By: cjoanne <cjoanne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/28 12:37:21 by cjoanne           #+#    #+#             */
-/*   Updated: 2021/09/07 12:15:52 by nephilister      ###   ########.fr       */
+/*   Updated: 2021/09/07 20:26:15 by cjoanne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,26 +30,18 @@ enum e_openmode
 	HEREDOC_OUT = 3
 };
 
-typedef struct s_pipeflags
-{
-	bool	filein;
-	bool	fileout;
-	bool	here_doc;
-	bool	appendf;
-}			t_pipeflags;
-
 typedef struct s_data
 {
-	char		**argv;
-	int			cntCmnds;
-	int			ind;
-	char		**envp;
-	char		***cmnds;
-	char		**paths;
-	int			pathsLen;
-	int			fdin;
-	int			fdout;
-	t_pipeflags	flags;
+	char	**argv;
+	int		cntCmnds;
+	int		ind;
+	char	**envp;
+	char	***cmnds;
+	char	**paths;
+	int		pathsLen;
+	int		fdin;
+	int		fdout;
+	bool	hereDoc;
 }	t_data;
 
 void	error_exit(char *str, int exitCode);

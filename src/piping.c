@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   piping_bonus.c                                     :+:      :+:    :+:   */
+/*   piping.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nephilister <nephilister@student.42.fr>    +#+  +:+       +#+        */
+/*   By: cjoanne <cjoanne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/28 11:30:53 by cjoanne           #+#    #+#             */
-/*   Updated: 2021/09/07 11:57:55 by nephilister      ###   ########.fr       */
+/*   Updated: 2021/09/08 00:30:34 by cjoanne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,25 +93,15 @@ void	redirect(t_data *data, int i)
 
 void	pipex(t_data data)
 {
-	int	fdin;
-	int	fdout;
 	int	i;
 	int pid;
 
-	fdin = 0;
-	fdout = 1;
-	if (data.flags.filein)
-		fdin = ft_open(INFILE, data);
-	else if (data.flags.here_doc)
-		redirect_heredoc(data);
-	if (data.flags.fileout)
-		fdout = ft_open(OUTFILE, data);
-	else if (data.flags.appendf)
-		fdout = ft_open(HEREDOC_OUT, data);
-	while (i < (data.cntCmnds - 1))
+	i = 0;
+	while (i < 1)
 		redirect(&data, i++);
 	pid = fork();
 	if (pid == 0)
-		run_command(&data, data.cntCmnds - 1);
+		run_command(&data, 1);
+	wait(NULL);
 	return ;
 }

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: nephilister <nephilister@student.42.fr>    +#+  +:+       +#+         #
+#    By: cjoanne <cjoanne@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/04/21 12:30:03 by cjoanne           #+#    #+#              #
-#    Updated: 2021/09/07 11:59:24 by nephilister      ###   ########.fr        #
+#    Updated: 2021/09/07 20:24:58 by cjoanne          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,9 +15,9 @@ NAME = pipex
 SRCS_DIR	=	src/
 SRCS_LIST	=	errors.c\
 				parsing.c\
-				pipex_bonus.c\
-				piping_bonus.c\
-				redirect_bonus.c
+				pipex.c\
+				piping.c\
+				redirect.c
 SRCS		=	$(addprefix $(SRCS_DIR), $(SRCS_LIST))
 
 OBJS_LIST	=	$(patsubst %.c, %.o, $(SRCS_LIST))
