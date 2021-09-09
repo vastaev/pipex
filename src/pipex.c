@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nephilister <nephilister@student.42.fr>    +#+  +:+       +#+        */
+/*   By: cjoanne <cjoanne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/28 00:46:21 by nephilister       #+#    #+#             */
-/*   Updated: 2021/09/09 03:30:20 by nephilister      ###   ########.fr       */
+/*   Updated: 2021/09/10 00:04:20 by cjoanne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,7 @@ void	initialize_data(int argc, char *argv[], char *envp[], t_data *data)
 
 void	validation_of_args(int argc, char *argv[], t_data *data)
 {
-	//если в спаршенной строке есть какой-то из символов пайпа, то передавать флаги
-	int i;
+	int	i;
 
 	i = 0;
 	data->fdin = 0;
@@ -33,7 +32,7 @@ void	validation_of_args(int argc, char *argv[], t_data *data)
 	while (argv[i] != NULL)
 	{
 		if (ft_strcmp(argv[i], "<<") == 0)
-			data->fdin =  data->hereDoc = 1;
+			data->hereDoc = 1;
 		else if (argv[i][0] == '<')
 		{
 			if (access(argv[1], F_OK) == -1 || access(argv[1], R_OK) == -1)

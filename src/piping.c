@@ -6,7 +6,7 @@
 /*   By: cjoanne <cjoanne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/28 11:30:53 by cjoanne           #+#    #+#             */
-/*   Updated: 2021/09/09 23:55:11 by cjoanne          ###   ########.fr       */
+/*   Updated: 2021/09/10 01:05:47 by cjoanne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	ft_open(int mode, t_data data)
 {
 	int	fd;
-	
+
 	if (mode == OUTFILE)
 		fd = open(data.argv[data.ind], O_WRONLY | O_CREAT | O_TRUNC, 00774);
 	else if (mode == INFILE)
@@ -93,15 +93,25 @@ void	redirect(t_data *data, int i)
 
 void	pipex(t_data data)
 {
-	int	i;
-	int pid;
-	int	p[data.pipesNum][2];
-	
+	int		i;
+	pid_t	pid;
+	int		**p;
+
+	p = malloc((sizeof(int *) * data.pipesNum));
+	i = 0;
+	while(i < data.pipesNum)
+	{
+		p[i] = malloc(sizeof(int) * 2);
+		i++;
+	}
 	i = 0;
 	while (i < data.pipesNum)
-		pipe(p[i++]);
+	{
+		pipe(p[i]);
+		i++;
+	}
 	i = 0;
-	while (i <= data.pipesNum) 
+	while (i <= data.pipesNum)
 	{
 		pid = fork();
 		if (pid == 0)
@@ -128,12 +138,16 @@ void	pipex(t_data data)
 			}
 			run_command(&data, i);
 		}
-		close(p[i][1]);
+		if (i < data.pipesNum)
+			close(p[i][1]);
 		i++;
 	}
 	i = 0;
-	while (i <= data.pipesNum)
-		close(p[i++][0]);
+	while (i < data.pipesNum)
+	{
+		close(p[i][0]);
+		i++;
+	}
 	i = 0;
 	while (i <= data.pipesNum)
 	{

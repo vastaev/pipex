@@ -6,7 +6,7 @@
 /*   By: cjoanne <cjoanne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/28 11:30:43 by cjoanne           #+#    #+#             */
-/*   Updated: 2021/09/09 23:28:06 by cjoanne          ###   ########.fr       */
+/*   Updated: 2021/09/10 00:00:37 by cjoanne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 void	parse_commands(t_data *data)
 {
 	int	j;
-	int k;
-	int l;
+	int	k;
+	int	l;
 
 	k = 0;
 	j = 2;

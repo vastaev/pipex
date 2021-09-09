@@ -6,7 +6,7 @@
 #    By: cjoanne <cjoanne@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/04/21 12:30:03 by cjoanne           #+#    #+#              #
-#    Updated: 2021/09/07 20:24:58 by cjoanne          ###   ########.fr        #
+#    Updated: 2021/09/10 00:39:57 by cjoanne          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -77,6 +77,9 @@ fclean : clean
 	@$(RM) $(LIBFT)
 	@echo "$(NAME): $(RED)$(LIBA) was deleted$(RESET)"
 	@$(RM) $(NAME)_bonus
+
+debug:
+	gcc -g ${SRCS} $(INCLUDES) ./lib/libft/srcs/*.c -o pipex
 
 re : fclean all
 
