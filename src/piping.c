@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   piping.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nephilister <nephilister@student.42.fr>    +#+  +:+       +#+        */
+/*   By: cjoanne <cjoanne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/28 11:30:53 by cjoanne           #+#    #+#             */
-/*   Updated: 2021/09/09 18:06:38 by nephilister      ###   ########.fr       */
+/*   Updated: 2021/09/09 23:43:02 by cjoanne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,28 +95,28 @@ void	pipex(t_data data)
 {
 	int	i;
 	int pid;
-	int	p[4][2];
+	int	p[data.pipesNum][2];
 	
 	i = 0;
-	while (i < 4) 
+	while (i < data.pipesNum)
+		pipe(p[i++]);
+	i = 0;
+	while (i <= data.pipesNum) 
 	{
-		pipe(p[i]);
 		pid = fork();
 		if (pid == 0)
 		{
-			if (i == 0 || i == 3)
+			if (i == 0 || i == data.pipesNum)
 			{
 				if (i == 0)
 				{
 					close(p[0][0]);
 					dup2(p[0][1], STDOUT_FILENO);
-					// close(p[0][1]);
 				}
 				else
 				{
 					close(p[i - 1][1]);
 					dup2(p[i - 1][0], STDIN_FILENO);
-					// close(p[i - 1][0]);
 				}
 			}
 			else
@@ -128,6 +128,13 @@ void	pipex(t_data data)
 			}
 			run_command(&data, i);
 		}
+		close(p[i][1]);
+		i++;
+	}
+	i = 0;
+	while (i <= data.pipesNum)
+	{
+		close(p[i][0]);
 		i++;
 	}
 	wait(NULL);

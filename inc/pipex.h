@@ -6,7 +6,7 @@
 /*   By: cjoanne <cjoanne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/28 12:37:21 by cjoanne           #+#    #+#             */
-/*   Updated: 2021/09/07 20:26:15 by cjoanne          ###   ########.fr       */
+/*   Updated: 2021/09/09 23:23:17 by cjoanne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,10 @@ enum e_openmode
 typedef struct s_data
 {
 	char	**argv;
-	int		cntCmnds;
 	int		ind;
 	char	**envp;
 	char	***cmnds;
+	int		pipesNum;
 	char	**paths;
 	int		pathsLen;
 	int		fdin;
