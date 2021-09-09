@@ -6,7 +6,7 @@
 /*   By: cjoanne <cjoanne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/28 11:30:53 by cjoanne           #+#    #+#             */
-/*   Updated: 2021/09/09 23:43:02 by cjoanne          ###   ########.fr       */
+/*   Updated: 2021/09/09 23:55:11 by cjoanne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,10 +133,12 @@ void	pipex(t_data data)
 	}
 	i = 0;
 	while (i <= data.pipesNum)
+		close(p[i++][0]);
+	i = 0;
+	while (i <= data.pipesNum)
 	{
-		close(p[i][0]);
+		wait(NULL);
 		i++;
 	}
-	wait(NULL);
 	return ;
 }
