@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cjoanne <cjoanne@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nephilister <nephilister@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/28 12:40:43 by cjoanne           #+#    #+#             */
-/*   Updated: 2021/08/31 15:50:17 by cjoanne          ###   ########.fr       */
+/*   Updated: 2021/09/08 17:38:10 by nephilister      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ typedef struct s_list
 }					t_list;
 
 long long	ft_atoi(const char *str);
-int			ft_isdigit(int c);
+int			ft_isdigit(char c);
 size_t		ft_strlen(const char *s);
 int			ft_memcmp(const void *s1, const void *s2, size_t n);
 void		*ft_memcpy(void *dst, const void *src, size_t n);
@@ -67,7 +67,7 @@ void		ft_lstclear(t_list **lst, void (*del)(void *));
 t_list		*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
 void		ft_lstiter(t_list *lst, void (*f)(void *));
 int			ft_strcmp(const char *s1, const char *s2);
-int			ft_isspace(int c);
+int			ft_isspace(char c);
 void		ft_putstrnewline(const char *str);
 int			ft_split_len(char **s);
 int			get_next_line(int fd, char **line);

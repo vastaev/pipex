@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cjoanne <cjoanne@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nephilister <nephilister@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/28 00:46:21 by nephilister       #+#    #+#             */
-/*   Updated: 2021/09/08 00:24:20 by cjoanne          ###   ########.fr       */
+/*   Updated: 2021/09/09 03:30:20 by nephilister      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	validation_of_args(int argc, char *argv[], t_data *data)
 	i = 0;
 	data->fdin = 0;
 	data->fdout = 1;
-	while (argv[i] != '\0')
+	while (argv[i] != NULL)
 	{
 		if (ft_strcmp(argv[i], "<<") == 0)
 			data->fdin =  data->hereDoc = 1;
