@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cjoanne <cjoanne@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nephilister <nephilister@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/28 12:37:21 by cjoanne           #+#    #+#             */
-/*   Updated: 2021/09/09 23:23:17 by cjoanne          ###   ########.fr       */
+/*   Updated: 2021/09/10 18:19:35 by nephilister      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,12 @@ typedef struct s_data
 	int		fdout;
 	bool	hereDoc;
 }	t_data;
+
+typedef struct s_redir
+{
+	int				type;
+	struct s_redir	*next;
+}	t_redir;
 
 void	error_exit(char *str, int exitCode);
 void	errno_exit(char *name);

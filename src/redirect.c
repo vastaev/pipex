@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   redirect_bonus.c                                   :+:      :+:    :+:   */
+/*   redirect.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cjoanne <cjoanne@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nephilister <nephilister@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/28 12:36:44 by cjoanne           #+#    #+#             */
-/*   Updated: 2021/09/01 12:58:04 by cjoanne          ###   ########.fr       */
+/*   Updated: 2021/09/10 18:17:35 by nephilister      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static void	input_taking(t_data data, int *fd)
 	close(fd[0]);
 	while (1)
 	{
-		ft_putstr_fd("heredoc> ", 1);
+		ft_putstr_fd("> ", 1);
 		get_next_line(0, &line);
 		if (ft_strcmp(line, data.argv[2]) == 0)
 			break ;

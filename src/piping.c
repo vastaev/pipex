@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   piping.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cjoanne <cjoanne@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nephilister <nephilister@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/28 11:30:53 by cjoanne           #+#    #+#             */
-/*   Updated: 2021/09/10 01:05:47 by cjoanne          ###   ########.fr       */
+/*   Updated: 2021/09/10 18:16:31 by nephilister      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,34 +63,6 @@ void	run_command(t_data *data, int i)
 	exit(5);
 }
 
-void	redirect(t_data *data, int i)
-{
-	int	pid;
-	int	fd[2];
-
-	if (pipe(fd) == -1)
-		errno_exit(NULL);
-	pid = fork();
-	if (pid == -1)
-		errno_exit(NULL);
-	if (pid)
-	{
-		close(fd[1]);
-		if (dup2(fd[0], STDIN_FILENO) == -1)
-			errno_exit(NULL);
-		close(fd[0]);
-		waitpid(pid, NULL, 0);
-	}
-	else
-	{
-		close(fd[0]);
-		if (dup2(fd[1], STDOUT_FILENO) == -1)
-			errno_exit(NULL);
-		close(fd[1]);
-		run_command(data, i);
-	}
-}
-
 void	pipex(t_data data)
 {
 	int		i;
@@ -121,12 +93,12 @@ void	pipex(t_data data)
 				if (i == 0)
 				{
 					close(p[0][0]);
-					dup2(p[0][1], STDOUT_FILENO);
+					dup2(p[0][1], data.fdout);
 				}
 				else
 				{
 					close(p[i - 1][1]);
-					dup2(p[i - 1][0], STDIN_FILENO);
+					dup2(p[i - 1][0], data.fdin);
 				}
 			}
 			else
