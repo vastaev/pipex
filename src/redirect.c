@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirect.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nephilister <nephilister@student.42.fr>    +#+  +:+       +#+        */
+/*   By: cjoanne <cjoanne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/28 12:36:44 by cjoanne           #+#    #+#             */
-/*   Updated: 2021/09/10 18:17:35 by nephilister      ###   ########.fr       */
+/*   Updated: 2021/09/11 13:22:28 by cjoanne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static void	input_taking(t_data data, int *fd)
 	{
 		ft_putstr_fd("> ", 1);
 		get_next_line(0, &line);
-		if (ft_strcmp(line, data.argv[2]) == 0)
+		if (ft_strcmp(line, data.stopWord) == 0)
 			break ;
 		tmp = line;
 		free(tmp);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nephilister <nephilister@student.42.fr>    +#+  +:+       +#+        */
+/*   By: cjoanne <cjoanne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/28 12:37:21 by cjoanne           #+#    #+#             */
-/*   Updated: 2021/09/10 18:19:35 by nephilister      ###   ########.fr       */
+/*   Updated: 2021/09/11 15:24:13 by cjoanne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,19 @@ enum e_openmode
 {
 	INFILE = 1,
 	OUTFILE = 2,
-	HEREDOC_OUT = 3
+	OUTAPPEND = 3
 };
+
+typedef struct s_redir
+{
+	int				type;
+	char			*fileName;
+	struct s_redir	*next;
+}					t_redir;
 
 typedef struct s_data
 {
 	char	**argv;
-	int		ind;
 	char	**envp;
 	char	***cmnds;
 	int		pipesNum;
@@ -42,13 +48,9 @@ typedef struct s_data
 	int		fdin;
 	int		fdout;
 	bool	hereDoc;
-}	t_data;
-
-typedef struct s_redir
-{
-	int				type;
-	struct s_redir	*next;
-}	t_redir;
+	t_redir	*redirects;
+	char	stopWord;
+}			t_data;
 
 void	error_exit(char *str, int exitCode);
 void	errno_exit(char *name);
@@ -56,7 +58,10 @@ void	parse_paths(t_data *data);
 void	parse_commands(t_data *data);
 void	pipex(t_data data);
 void	redirect_heredoc(t_data data);
-int		ft_open(int mode, t_data data);
+void	ft_open(int mode, t_data *data, t_redir *ptr);
 
+
+t_redir	*new_redirect(int t, char *fName);
+void	add_redirect(t_redir **lst, t_redir *new);
 
 #endif

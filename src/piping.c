@@ -3,28 +3,37 @@
 /*                                                        :::      ::::::::   */
 /*   piping.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nephilister <nephilister@student.42.fr>    +#+  +:+       +#+        */
+/*   By: cjoanne <cjoanne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/28 11:30:53 by cjoanne           #+#    #+#             */
-/*   Updated: 2021/09/10 18:16:31 by nephilister      ###   ########.fr       */
+/*   Updated: 2021/09/11 15:25:09 by cjoanne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-int	ft_open(int mode, t_data data)
+void	ft_open(int mode, t_data *data, t_redir *ptr)
 {
 	int	fd;
+	int	pid;
 
-	if (mode == OUTFILE)
-		fd = open(data.argv[data.ind], O_WRONLY | O_CREAT | O_TRUNC, 00774);
-	else if (mode == INFILE)
-		fd = open(data.argv[1], O_RDONLY, 00774);
-	else if (mode == HEREDOC_OUT)
-		fd = open(data.argv[data.ind], O_WRONLY | O_CREAT | O_APPEND, 00774);
-	if (fd == -1)
-		errno_exit(NULL);
-	return (fd);
+	pid = fork();
+	// if (pid == -1) error
+	if (pid == 0)
+	{
+		if (mode == OUTFILE)
+			fd = open(ptr->fileName, O_WRONLY | O_CREAT | O_TRUNC, 00774);
+		else if (mode == INFILE)
+			fd = open(ptr->fileName, O_RDONLY, 00774);
+		else if (mode == OUTAPPEND)
+			fd = open(ptr->fileName, O_WRONLY | O_CREAT | O_APPEND, 00774);
+		if (fd == -1)
+			errno_exit(NULL);
+		if (ptr->next == NULL)
+			data->fdout = fd;
+		exit(0);
+	}
+	// waitpid();
 }
 
 int	get_next_path(t_data *data, int ind, int i, char *cmnd)
@@ -93,20 +102,20 @@ void	pipex(t_data data)
 				if (i == 0)
 				{
 					close(p[0][0]);
-					dup2(p[0][1], data.fdout);
+					dup2(p[0][1], STDOUT_FILENO);
 				}
 				else
 				{
 					close(p[i - 1][1]);
-					dup2(p[i - 1][0], data.fdin);
+					dup2(p[i - 1][0], STDIN_FILENO);
 				}
 			}
 			else
 			{
 				close(p[i - 1][1]);
-				dup2(p[i - 1][0], 0);
+				dup2(p[i - 1][0], STDIN_FILENO);
 				close(p[i][0]);
-				dup2(p[i][1], 1);
+				dup2(p[i][1], STDOUT_FILENO);
 			}
 			run_command(&data, i);
 		}
