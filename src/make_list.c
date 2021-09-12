@@ -6,7 +6,7 @@
 /*   By: cjoanne <cjoanne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/10 04:24:51 by nephilister       #+#    #+#             */
-/*   Updated: 2021/09/11 09:59:20 by cjoanne          ###   ########.fr       */
+/*   Updated: 2021/09/12 03:44:04 by cjoanne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ t_redir	*new_redirect(int t, char *fName)
 	new->type = t;
 	new->fileName = fName;
 	new->next = NULL;
+	return (new);
 }
 
 void	add_redirect(t_redir **lst, t_redir *new)
@@ -30,6 +31,7 @@ void	add_redirect(t_redir **lst, t_redir *new)
 		*lst = new;
 	else
 	{
+		ptr = *lst;
 		while (ptr->next != NULL)
 			ptr = ptr->next;		
 		ptr->next = new;

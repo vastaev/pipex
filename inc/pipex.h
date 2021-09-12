@@ -6,7 +6,7 @@
 /*   By: cjoanne <cjoanne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/28 12:37:21 by cjoanne           #+#    #+#             */
-/*   Updated: 2021/09/11 15:24:13 by cjoanne          ###   ########.fr       */
+/*   Updated: 2021/09/12 02:49:44 by cjoanne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ enum e_openmode
 {
 	INFILE = 1,
 	OUTFILE = 2,
-	OUTAPPEND = 3
+	OUTAPPEND = 3,
+	INHEREDOC = 4
 };
 
 typedef struct s_redir
@@ -49,7 +50,7 @@ typedef struct s_data
 	int		fdout;
 	bool	hereDoc;
 	t_redir	*redirects;
-	char	stopWord;
+	char	*stopWord;
 }			t_data;
 
 void	error_exit(char *str, int exitCode);
