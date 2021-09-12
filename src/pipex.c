@@ -6,7 +6,7 @@
 /*   By: cjoanne <cjoanne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/28 00:46:21 by nephilister       #+#    #+#             */
-/*   Updated: 2021/09/12 12:38:43 by cjoanne          ###   ########.fr       */
+/*   Updated: 2021/09/12 17:33:30 by cjoanne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	validation_of_args(int argc, char *argv[], t_data *data)
 
 	i = 1;
 	data->fdin = 0;
-	data->fdout = 1;
+	data->fdout = 0;
 	while (argv[i + 1] != NULL)
 	{
 		if (ft_strcmp(argv[i], "<<") == 0)
@@ -56,7 +56,8 @@ void open_redirects(t_data *data)
 	ptr = data->redirects;
 	while (ptr)
 	{
-		ft_open(data, ptr);
+		if (ft_open(data, ptr) == 1)
+			break ;
 		ptr = ptr->next;
 	}
 }
@@ -67,9 +68,9 @@ int	main(int argc, char *argv[], char *envp[])
 
 	validation_of_args(argc, argv, &data);
 	initialize_data(argc, argv, envp, &data);
-	// parse_commands(&data);
-	// parse_paths(&data);
+	parse_commands(&data);
+	parse_paths(&data);
 	open_redirects(&data);
-	// pipex(data);
+	pipex(data);
 	return (0);
 }

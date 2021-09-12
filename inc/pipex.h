@@ -6,7 +6,7 @@
 /*   By: cjoanne <cjoanne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/28 12:37:21 by cjoanne           #+#    #+#             */
-/*   Updated: 2021/09/12 12:38:28 by cjoanne          ###   ########.fr       */
+/*   Updated: 2021/09/12 16:03:26 by cjoanne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	parse_paths(t_data *data);
 void	parse_commands(t_data *data);
 void	pipex(t_data data);
 void	redirect_heredoc(t_data data, char *stopWord);
-void	ft_open(t_data *data, t_redir *ptr);
+int		ft_open(t_data *data, t_redir *ptr);
 
 t_redir	*new_redirect(int t, char *fName);
 void	add_redirect(t_redir **lst, t_redir *new);
