@@ -6,7 +6,7 @@
 /*   By: cjoanne <cjoanne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/28 00:46:21 by nephilister       #+#    #+#             */
-/*   Updated: 2021/09/12 03:55:25 by cjoanne          ###   ########.fr       */
+/*   Updated: 2021/09/12 12:38:43 by cjoanne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,21 +28,36 @@ void	validation_of_args(int argc, char *argv[], t_data *data)
 	i = 1;
 	data->fdin = 0;
 	data->fdout = 1;
-	while (argv[i] != NULL)
+	while (argv[i + 1] != NULL)
 	{
 		if (ft_strcmp(argv[i], "<<") == 0)
-			if (argv[i + 1])
-				add_redirect(&data->redirects, new_redirect(INHEREDOC, argv[i + 1]));
+			add_redirect(&data->redirects, new_redirect(INHEREDOC, argv[i + 1]));
 		if (ft_strcmp(argv[i], ">") == 0)
-			if (argv[i + 1])
-				add_redirect(&data->redirects, new_redirect(OUTFILE, argv[i + 1]));
+			add_redirect(&data->redirects, new_redirect(OUTFILE, argv[i + 1]));
 		if (ft_strcmp(argv[i], "<") == 0)
-			if (argv[i + 1])
-				add_redirect(&data->redirects, new_redirect(INFILE, argv[i + 1]));
+			add_redirect(&data->redirects, new_redirect(INFILE, argv[i + 1]));
 		if (ft_strcmp(argv[i], ">>") == 0)
-			if (argv[i + 1])
-				add_redirect(&data->redirects, new_redirect(OUTAPPEND, argv[i + 1]));
+			add_redirect(&data->redirects, new_redirect(OUTAPPEND, argv[i + 1]));
 		i++;
+	}
+}
+
+void open_redirects(t_data *data)
+{
+	t_redir	*ptr;
+
+	ptr = data->redirects;
+	while (ptr)
+	{
+		if (ptr->type == INHEREDOC)
+			redirect_heredoc(*data, ptr->fileName);
+		ptr = ptr->next;
+	}
+	ptr = data->redirects;
+	while (ptr)
+	{
+		ft_open(data, ptr);
+		ptr = ptr->next;
 	}
 }
 
@@ -51,9 +66,10 @@ int	main(int argc, char *argv[], char *envp[])
 	t_data	data;
 
 	validation_of_args(argc, argv, &data);
-	// initialize_data(argc, argv, envp, &data);
+	initialize_data(argc, argv, envp, &data);
 	// parse_commands(&data);
 	// parse_paths(&data);
+	open_redirects(&data);
 	// pipex(data);
 	return (0);
 }

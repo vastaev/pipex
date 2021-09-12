@@ -6,13 +6,13 @@
 /*   By: cjoanne <cjoanne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/28 11:30:53 by cjoanne           #+#    #+#             */
-/*   Updated: 2021/09/11 15:25:09 by cjoanne          ###   ########.fr       */
+/*   Updated: 2021/09/12 12:31:42 by cjoanne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-void	ft_open(int mode, t_data *data, t_redir *ptr)
+void	ft_open(t_data *data, t_redir *ptr)
 {
 	int	fd;
 	int	pid;
@@ -21,11 +21,12 @@ void	ft_open(int mode, t_data *data, t_redir *ptr)
 	// if (pid == -1) error
 	if (pid == 0)
 	{
-		if (mode == OUTFILE)
+		
+		if (ptr->type == OUTFILE)
 			fd = open(ptr->fileName, O_WRONLY | O_CREAT | O_TRUNC, 00774);
-		else if (mode == INFILE)
+		else if (ptr->type == INFILE)
 			fd = open(ptr->fileName, O_RDONLY, 00774);
-		else if (mode == OUTAPPEND)
+		else if (ptr->type == OUTAPPEND)
 			fd = open(ptr->fileName, O_WRONLY | O_CREAT | O_APPEND, 00774);
 		if (fd == -1)
 			errno_exit(NULL);
@@ -33,7 +34,7 @@ void	ft_open(int mode, t_data *data, t_redir *ptr)
 			data->fdout = fd;
 		exit(0);
 	}
-	// waitpid();
+	wait(NULL);
 }
 
 int	get_next_path(t_data *data, int ind, int i, char *cmnd)
@@ -45,6 +46,7 @@ int	get_next_path(t_data *data, int ind, int i, char *cmnd)
 		tmp = ft_strjoin(data->paths[ind], "/");
 		data->cmnds[i][0] = cmnd;
 		data->cmnds[i][0] = ft_strjoin(tmp, cmnd);
+		free(tmp);
 		return (1);
 	}
 	else

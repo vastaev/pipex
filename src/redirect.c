@@ -6,13 +6,13 @@
 /*   By: cjoanne <cjoanne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/28 12:36:44 by cjoanne           #+#    #+#             */
-/*   Updated: 2021/09/11 13:22:28 by cjoanne          ###   ########.fr       */
+/*   Updated: 2021/09/12 11:16:06 by cjoanne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-static void	input_taking(t_data data, int *fd)
+static void	input_taking(int *fd, char *stopWord)
 {
 	char	*line;
 	char	*tmp;
@@ -22,7 +22,7 @@ static void	input_taking(t_data data, int *fd)
 	{
 		ft_putstr_fd("> ", 1);
 		get_next_line(0, &line);
-		if (ft_strcmp(line, data.stopWord) == 0)
+		if (ft_strcmp(line, stopWord) == 0)
 			break ;
 		tmp = line;
 		free(tmp);
@@ -35,7 +35,7 @@ static void	input_taking(t_data data, int *fd)
 	exit(0);
 }
 
-void	redirect_heredoc(t_data data)
+void	redirect_heredoc(t_data data, char *stopWord)
 {
 	int	pid;
 	int	fd[2];
@@ -45,16 +45,11 @@ void	redirect_heredoc(t_data data)
 	pid = fork();
 	if (pid == -1)
 		errno_exit(NULL);
-	if (pid)
-	{
-		close(fd[1]);
-		if (dup2(fd[0], STDIN_FILENO) == -1)
-			errno_exit(NULL);
-		close(fd[0]);
-		waitpid(pid, NULL, 0);
-	}
-	else
-	{
-		input_taking(data, fd);
-	}
+	if (pid == 0)
+		input_taking(fd, stopWord);
+	close(fd[1]);
+	// if (dup2(fd[0], STDIN_FILENO) == -1)
+	// 	errno_exit(NULL);
+	// close(fd[0]);
+	wait(NULL);
 }
