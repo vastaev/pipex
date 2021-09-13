@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nephilister <nephilister@student.42.fr>    +#+  +:+       +#+        */
+/*   By: cjoanne <cjoanne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/28 12:37:21 by cjoanne           #+#    #+#             */
-/*   Updated: 2021/09/13 08:53:50 by nephilister      ###   ########.fr       */
+/*   Updated: 2021/09/13 09:53:27 by cjoanne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	errno_exit(char *name);
 void	parse_paths(t_data *data);
 void	parse_commands(t_data *data);
 void	pipex(t_data data);
-void	redirect_heredoc(t_data data, char *stopWord);
+void	redirect_heredoc(t_data *data, char *stopWord);
 int		ft_open(t_data *data, t_redir *ptr);
 
 t_redir	*new_redirect(int t, char *fName);

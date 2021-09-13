@@ -6,7 +6,7 @@
 /*   By: cjoanne <cjoanne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/28 00:46:21 by nephilister       #+#    #+#             */
-/*   Updated: 2021/09/12 17:33:30 by cjoanne          ###   ########.fr       */
+/*   Updated: 2021/09/13 09:54:13 by cjoanne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void open_redirects(t_data *data)
 	while (ptr)
 	{
 		if (ptr->type == INHEREDOC)
-			redirect_heredoc(*data, ptr->fileName);
+			redirect_heredoc(data, ptr->fileName);
 		ptr = ptr->next;
 	}
 	ptr = data->redirects;
