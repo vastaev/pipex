@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cjoanne <cjoanne@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nephilister <nephilister@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/28 12:37:21 by cjoanne           #+#    #+#             */
-/*   Updated: 2021/09/12 16:03:26 by cjoanne          ###   ########.fr       */
+/*   Updated: 2021/09/13 08:53:50 by nephilister      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ typedef struct s_data
 	int		pathsLen;
 	int		fdin;
 	int		fdout;
-	bool	hereDoc;
 	t_redir	*redirects;
 }			t_data;
 

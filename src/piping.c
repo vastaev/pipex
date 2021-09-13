@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   piping.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cjoanne <cjoanne@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nephilister <nephilister@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/28 11:30:53 by cjoanne           #+#    #+#             */
-/*   Updated: 2021/09/12 18:43:51 by cjoanne          ###   ########.fr       */
+/*   Updated: 2021/09/13 08:39:47 by nephilister      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,31 +14,14 @@
 
 int	ft_open(t_data *data, t_redir *ptr)
 {
-	int	pid;
-	int	wStatus;
-	int	statusCode;
-
-	// pid = fork();
-	// // if (pid == -1) error
-	// if (pid == 0)
-	// {
-		if (ptr->type == OUTFILE)
-			data->fdout = open(ptr->fileName, O_WRONLY | O_CREAT | O_TRUNC, 00774);
-		else if (ptr->type == INFILE)
-			data->fdin = open(ptr->fileName, O_RDONLY, 00774);
-		else if (ptr->type == OUTAPPEND)
-			data->fdout = open(ptr->fileName, O_WRONLY | O_CREAT | O_APPEND, 00774);
-		if (data->fdin < 0 || data->fdout < 0)
-			errno_exit(NULL);
-		// exit(0);
-	// }
-	// wait(&wStatus);
-	// if (WIFEXITED(wStatus))
-	// {
-	// 	statusCode = WEXITSTATUS(wStatus);
-	// 	if (statusCode != 0)
-	// 		return (1);
-	// }
+	if (ptr->type == OUTFILE)
+		data->fdout = open(ptr->fileName, O_WRONLY | O_CREAT | O_TRUNC, 00774);
+	else if (ptr->type == INFILE)
+		data->fdin = open(ptr->fileName, O_RDONLY, 00774);
+	else if (ptr->type == OUTAPPEND)
+		data->fdout = open(ptr->fileName, O_WRONLY | O_CREAT | O_APPEND, 00774);
+	if (data->fdin < 0 || data->fdout < 0)
+		return (1);
 	return (0);
 }
 
@@ -76,7 +59,7 @@ void	run_command(t_data *data, int i)
 	ft_putstr_fd("pipex: command not found: ", 2);
 	ft_putstr_fd(tmpCmnd, 2);
 	ft_putstr_fd("\n", 2);
-	exit(5);
+	exit(1);
 }
 
 void	pipex(t_data data)
